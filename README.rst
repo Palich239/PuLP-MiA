@@ -16,7 +16,7 @@ If pip is available on your system::
 
 Otherwise follow the download instructions on the PyPi page.
 
-PuLP-Mia requires:
+PuLP-MiA requires:
      + Python >= 3.4
      + PuLP >= 1.6.10 (see PuLP README file for more details)
 
@@ -238,5 +238,6 @@ Now see how some Assignment problem can be solved by PuLP-MiA
     pprint(task.PDict)
 
 
-Copyright Dmitriy A. Pavlov (dpavlov239@mail.ru)
+Copyright Dmitriy A. Pavlov (dpavlov239@mail.ru) under MIT license
+
 See the LICENSE file for copyright information.
