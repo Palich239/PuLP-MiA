@@ -19,6 +19,7 @@ Otherwise follow the download instructions on the PyPi page.
 PuLP-MiA requires:
      + Python >= 3.4
      + PuLP >= 1.6.10 (see PuLP README file for more details)
+     + Amply >= 0.1.2
 
 Examples
 ================
