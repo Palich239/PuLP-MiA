@@ -25,7 +25,7 @@ Examples
 
 Use Task() to create new LP-task. To create with name MyTask and in debug mode use
 
-.. code-block:: python:
+.. code-block::
 
     task = Task(Name='MyTask', debug=True)
 
@@ -34,7 +34,7 @@ Release mode updates ones only before solving a Lp-problem.
 
 Use VariablesType flag to set type of variables
 
-.. code-block:: python:
+.. code-block::
 
     task = Task(VariablesType='Integer')     # Continuous, Integer, Boolean
 
@@ -44,32 +44,32 @@ To form the task use Constraint() class.
 
 To create the Objective function (criterion) use
 
-.. code-block:: python:
+.. code-block::
 
     c = Constraint('MAX')     # 'MAX, 'MIN'
 
 To set some coeffients on old or new variables use
 
-.. code-block:: python:
+.. code-block::
 
     c.setCoeff(('v'), 0.3)     # v-indicator with weight 0.3
     c.setCoeff(('p'), 0.7)     # p-indicator with weight 0.7
 
 To set an Objective function on the task use
 
-.. code-block:: python:
+.. code-block::
 
     task.setObjective(c)
 
 To create some Constraints use
 
-.. code-block:: python:
+.. code-block::
 
     a = Constraint('<=')      # '<=', '==', '>='
 
 To set some coeffients on old or new variables use
 
-.. code-block:: python:
+.. code-block::
 
     # 50x11 + 100x12 + 50x21 + 100x22 <= 200
     a.setCoeff(('x', 1, 1), 50)
@@ -79,19 +79,19 @@ To set some coeffients on old or new variables use
 
 To set a sum of line combine of all variables in a-constraint use
 
-.. code-block:: python:
+.. code-block::
 
     a.setBValue(200)
 
 To set a Constraint on the task use
 
-.. code-block:: python:
+.. code-block::
 
     task.addConstraint(a)
 
 Let's create a Constraint with v-indicator and p-indicator use
 
-.. code-block:: python:
+.. code-block::
 
     a = Constraint('==')
     a.setCoeff(('x', 1, 1), 1)
@@ -107,7 +107,7 @@ Let's create a Constraint with v-indicator and p-indicator use
 
 To run auto-solver by PuLP and watch result use
 
-.. code-block:: python:
+.. code-block::
 
     from pprint import pprint
 
@@ -119,7 +119,7 @@ To run auto-solver by PuLP and watch result use
 Once solved Plan is here.
 By default here is no zero variables. To get full Plan use
 
-.. code-block:: python:
+.. code-block::
 
     pprint(task.Plan.getPDict(with_zeroe_values=True))
 
@@ -127,7 +127,7 @@ If you'll make some modifications (new Objective or Constraints) - Plan will be 
 
 Before solving you can get elements of task in matrix-like style
 
-.. code-block:: python:
+.. code-block::
 
     print('\nAMatrix')
     pprint(task.AMatrix)
@@ -138,7 +138,7 @@ Before solving you can get elements of task in matrix-like style
 
 To see generated variables in task, status and value of Objective use
 
-.. code-block:: python:
+.. code-block::
 
     pprint(task._Variables)
     print('\nStatus', task.Status)
@@ -146,13 +146,13 @@ To see generated variables in task, status and value of Objective use
 
 Finally, to get the generated pulp problem, use
 
-.. code-block:: python:
+.. code-block::
 
     prob = task.Prob
 
 Now see how some Assignment problem can be solved by PuLP-MiA
 
-.. code-block:: python:
+.. code-block::
 
     from itertools import product
     from pprint import pprint
