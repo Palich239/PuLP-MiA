@@ -5,7 +5,7 @@ from pulp import LpProblem, LpVariable, LpMinimize, LpMaximize, LpInteger, LpCon
 
 __author__ = 'Dmitriy Pavlov'
 __email__ = 'dpavlov239@mail.ru'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 __license__ = 'MIT'
 
 def get_key(__d: Any, __value: Any) -> Any:
