@@ -9,8 +9,8 @@ __version__ = '0.1.0'
 __license__ = 'MIT'
 
 def get_key(__d: Any, __value: Any) -> Any:
-    """Получение ключа по значению value из произвольного словаря d
-    Если такого ключа нет - возвращает None"""
+    """Getting a key by value from an arbitrary dictionary d
+If there is no such key, it returns None"""
     for k, v in __d.items():
         if v == __value:
             return k
@@ -19,7 +19,7 @@ def get_key(__d: Any, __value: Any) -> Any:
 
 Constraint = TypeVar('T', bound='Constraint')
 class Constraint(object):
-    """Класс ОГРАНИЧЕНИЕ"""
+    """The class CONSTRAINT"""
     def __init__(self: Constraint, Sign: str='==') -> None:
         """конструктор класса ОГРАНИЧЕНИЕ"""
         super(Constraint, self).__init__()
@@ -28,7 +28,7 @@ class Constraint(object):
         self._BValue = 0
 
     def _convert_coeff_key(self: Constraint, ACoeffKey: Iterable) -> tuple:
-        """Преобразует все "ключи" ПЕРЕМЕННЫХ в int, кроме типа ПЕРЕМЕННОЙ (0-позиция)"""
+        """Converts all" keys " of VARIABLES to int, except for the VARIABLE type (0-position)"""
         if isinstance(ACoeffKey,str):
             return ACoeffKey
         ACoeffKey_ = list(ACoeffKey)
@@ -37,42 +37,42 @@ class Constraint(object):
         return tuple(ACoeffKey_)
 
     def setACoeffDict(self: Constraint, AcoeffDict: dict) -> None:
-        """установка словаря коэффициентов при переменных в ОГРАНИЧЕНИИ"""
+        """setting a dictionary of coefficients for variables in a CONSTRAINT"""
         self._ACoeffDict = AcoeffDict
 
     def getACoeffDict(self: Constraint) -> dict:
-        """получение словаря коэффициентов при переменных из ОГРАНИЧЕНИЯ"""
+        """getting a dictionary of coefficients for variables from a CONSTRAINT"""
         return self._ACoeffDict
 
     def setCoeff(self: Constraint, ACoeffKey: Iterable, ACoeffValue: float) -> None:
-        """установка коэффициента при переменной с именем ACoeffKey в ОГРАНИЧЕНИЕ"""
+        """setting the coefficient for a variable named ACoeffKey in the CONSTRAINT"""
         self._ACoeffDict[self._convert_coeff_key(ACoeffKey)] = ACoeffValue
 
     def getCoeff(self: Constraint, ACoeffKey: Iterable) -> float:
-        """получение коэффициента при переменной с именем ACoeffKey из ОГРАНИЧЕНИЯ"""
+        """getting the coefficient for a variable named ACoeffKey from a CONSTRAINT"""
         if self._convert_coeff_key(ACoeffKey) in self._ACoeffDict:
             return self._ACoeffDict[self._convert_coeff_key(ACoeffKey)]
         else:
             return None
 
     def setSign(self: Constraint, Sign: str) -> None:
-        """установка знака Sign в ОГРАНИЧЕНИЕ"""
+        """setting the Sign sign to a CONSTRAINT"""
         self._Sign = Sign
 
     def getSign(self: Constraint) -> str:
-        """получение знака Sign из ОГРАНИЧЕНИЯ"""
+        """getting the Sign from a RESTRICTION"""
         return self._Sign
 
     def setBValue(self: Constraint, BValue: float) -> None:
-        """установка значения BValue в ОГРАНИЧЕНИЕ"""
+        """setting B value to a CONSTRAINT"""
         self._BValue = BValue
 
     def getBValue(self: Constraint) -> float:
-        """получение значения BValue из ОГРАНИЧЕНИЯ"""
+        """getting B Value from a CONSTRAINT"""
         return self._BValue
 
     def getAVector(self: Constraint, VariablesDict: Mapping[Iterable,int]) -> Iterable[float]:
-        """получение вектора А ОГРАНИЧЕНИЯ"""
+        """getting A CONSTRAINT vector"""
         AVector = [0 for i in range(len(VariablesDict))]
         for i in iter(self._ACoeffDict):
             AVector[VariablesDict[i]] = self._ACoeffDict[i]
@@ -81,9 +81,9 @@ class Constraint(object):
 
 Plan = TypeVar('T', bound='Plan')
 class Plan(object):
-    """Класс ПЛАН"""
+    """The class PLAN"""
     def __init__(self, PlanDict: dict={}, ResultVariables=None, VariablesDict: dict=None, PlanValue=None, Status=None):
-        """Конструктор класса ПЛАН"""
+        """Constructor of the PLAN class"""
         super(Plan, self).__init__()
         self._Status = Status
         self._PPlanValue = PlanValue
@@ -98,22 +98,22 @@ class Plan(object):
         return 'PLAN info:\n' + '\tStatus: ' + str(self.getStatus()) + '\n\tObjective: ' + str(self.getPValue())
 
     def getStatus(self):
-        """выдача статуса решения"""
+        """returns the solution status"""
         return LpStatus[self._Status]
 
     def getPValue(self):
-        """выдача значения целевой функции"""
+        """returns the value of the target function"""
         return self._PPlanValue
 
     def getPVector(self, VariablesDict: Mapping[Iterable,int]) -> Iterable[float]:
-        """возвращает вектор-ПЛАН"""
+        """returns a vector PLAN"""
         PVector = [0 for i in range(len(VariablesDict))]
         for i in self._PPlanDict:
             PVector[VariablesDict[i]] = self._PPlanDict[i]
         return PVector
 
     def getPDict(self, with_zeroe_values=False) -> dict:
-        """возвращает ПЛАН в виде словаря"""
+        """returns the PLAN in the form of a dictionary"""
         if not with_zeroe_values:
             return {k:v for k, v in self._PPlanDict.items() if v != 0}
         return copy(self._PPlanDict)
@@ -122,12 +122,12 @@ class Plan(object):
 
 Task = TypeVar('T', bound='Task')
 class Task(object):
-    """Класс ЗАДАЧА
-    Основной класс библиотеки
+    """The class TASK
+The main class of the library
     """
 
     def __repr__(self) -> str:
-        """строковое представление ЗАДАЧИ (краткая информация)"""
+        """string representation of the TASK (summary)"""
         self.collectVariables()
         res = 'TASK info:' + '\n'
         res += '\tNAME: ' + str(self._name) + '\n'
@@ -135,7 +135,7 @@ class Task(object):
         return res
 
     def __init__(self, Name: str=None, VariablesType: str='Continuous', debug=False) -> None:
-        """конструктор класса ЗАДАЧА"""
+        """constructor of the TASK class"""
         super(Task, self).__init__()
         #
         self._name = Name or 'test-task'
@@ -150,25 +150,25 @@ class Task(object):
         self._Plan = None # Plan
 
     def setObjective(self, Objective: Constraint) -> None:
-        """установка целевой функции в ЗАДАЧУ"""
+        """setting the Objective function in the TASK"""
         self._Objective = Objective
         if self._debug:
-            self.collectVariables()     # слишком часто обновляемся!
+            self.collectVariables()
 
     def addConstraint(self, Constraint: Constraint) -> None:
-        """добавление ОГРАНИЧЕНИЯ в ЗАДАЧУ и сбор переменных"""
+        """adding a CONSTRAINT to a TASK and collecting variables"""
         self._Constraints.append(Constraint)
         if self._debug:
-            self.collectVariables()     # слишком часто обновляемся!
+            self.collectVariables()
 
     def collectVariables(self) -> None:
-        """формирование ассоциативных переменных из ЗАДАЧИ (из self._Objective + self.Constarints)"""
+        """forming associative variables from the PROBLEM"""
         self._Plan = None
         self._Variables = copy(self._Objective.getACoeffDict())
         for constr in self._Constraints:
             self._Variables.update(constr.getACoeffDict())
 
-        #присвоение номеров ПЕРЕМЕННЫМ
+        #assigning numbers to VARIABLES
         num = 0
         for i in iter(self._Variables):
             self._Variables[i] = num
@@ -176,29 +176,29 @@ class Task(object):
 
     @property
     def AMatrix(self) -> Iterable[Iterable[float]]:
-        """формирование и выдача матрицы А"""
+        """the formation and results matrix A"""
         return [constr.getAVector(self._Variables) for constr in self._Constraints]
 
     @property
     def BVector(self) -> Iterable[float]:
-        """выдача вектора B (вектор ресурсов)"""
+        """the formation and results vector B (resource vector)"""
         return [b.getBValue() for b in self._Constraints]
 
     @property
     def CVector(self) -> Iterable[float]:
-        """выдача вектора C (целевая функция)"""
+        """the formation and results vector C (Objective function)"""
         return self._Objective.getAVector(self._Variables)
 
     @property
     def PVector(self) -> Iterable[float]:
-        """выдача вектора P (план)"""
+        """return the vector P (plan)"""
         if not self._Plan:
             self.solve()
         return self._Plan.getPVector(self._Variables)
 
     @property
     def PDict(self) -> dict:
-        """выдача словаря-плана"""
+        """return the dictionary-plan"""
         if not self._Plan:
             self.solve()
         return self._Plan.getPDict(with_zeroe_values=False)
@@ -218,7 +218,7 @@ class Task(object):
 
     @property
     def Plan(self) -> Plan:
-        """выдача ПЛАНА (решение задачи и выдача плана - если не решалась)"""
+        """return a PLAN (solving the problem and issuing a plan - if not solved)"""
         if not self._Plan:
             self.solve()
         return self._Plan
@@ -246,10 +246,10 @@ class Task(object):
         else:
             raise Exception('Unknown variables type' + str(self._VariablesType))
 
-        #формирование целевой функции
+        #forming the Objective function
         prob += lpDot(x, self.CVector)
 
-        #формирование ограничений
+        #creating Constraints
         for constr in self._Constraints:
             if constr.getSign() == '==':
                 prob += lpDot(x, constr.getAVector(self._Variables)) == constr.getBValue()
@@ -262,26 +262,26 @@ class Task(object):
 
     @property
     def isMaximize(self) -> bool:
-        """выдача True, если целевая функция стремится в максимум"""
+        """returns True if the target function tends to the maximum"""
         return (self._Objective.getSign() == 'MAX')
 
     @property
     def isMinimize(self) -> bool:
-        """выдача True, если целевая функция стремится в минимум"""
+        """returns True if the target function tends to the minimum"""
         return (self._Objective.getSign() == 'MIN')
 
     @property
     def variablesCount(self) -> int:
-        """число ПЕРЕМЕННЫХ ЗАДАЧИ"""
+        """number of TASK VARIABLES"""
         return len(self._Variables)
 
     @property
     def constraintsCount(self) -> int:
-        """число ОГРАНИЧЕНИЙ ЗАДАЧИ"""
+        """the number of CONSTRAINTS in the PROBLEM"""
         return len(self._Constraints)
 
     def solve(self: Task) -> None:
-        """Стандартное решение задачи линейного программирования"""
+        """Standard solution to a linear programming problem"""
         prob = self.Prob
         prob.solve()
         self._Plan = Plan(
